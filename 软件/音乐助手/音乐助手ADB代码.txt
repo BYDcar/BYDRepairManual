@@ -1,0 +1,6 @@
+酷狗包名
+1、 adb shell cmd notification allow_listener com.kugou.android.auto/com.littlepanda.bydmusic.NotificationListener
+2、adb shell pm grant com.kugou.android.auto android.permission.READ_LOGS
+普通包名
+1、 adb shell cmd notification allow_listener com.littlepanda.bydmusic/com.littlepanda.bydmusic.NotificationListener
+2、adb shell pm grant com.littlepanda.bydmusic android.permission.READ_LOGS
