@@ -7,7 +7,7 @@ BYD (Build Your Dream) Car Repair Manuals and Factory Images
 # 为什么免费分享？
 发现网上有些零零散散的资料，找起来很麻烦。目前汽车的软硬件生态太过封闭，软件方面来说不像手机和路由器那样可以随意刷入第三方开源系统，硬件方面来说不像3D打印机那样有很多改装升级的零配件。想想如果汽车可以刷入开源系统，升级开源零件，也许会很酷可以实现之前没有的功能。  
 
-目前国外有些人在研究改装加装辅助驾驶自动驾驶，比如这个视频 https://www.youtube.com/watch?v=Te4AhlRXnLw 把一款2005年的老车改装了特斯拉的iBooster并加装了开源辅助软件openpilot (https://github.com/commaai/openpilot)，实现了自动行驶。还有一些人在研究燃油车改装成电动车，比如这个视频 https://www.youtube.com/watch?v=ZVtOss1U7_s 把一个老车大众甲壳虫改装成电动车。因此我分享这些资料以便促进国内外研究各种改装加装。
+目前国外有些人在研究改装加装辅助驾驶自动驾驶，比如这个视频 https://www.youtube.com/watch?v=Te4AhlRXnLw 把一款2005年的老车改装了特斯拉的iBooster并加装了开源辅助软件openpilot ( https://github.com/commaai/openpilot )，实现了自动行驶。还有一些人在研究燃油车改装成电动车，比如这个视频 https://www.youtube.com/watch?v=ZVtOss1U7_s 把一个老车大众甲壳虫改装成电动车。因此我分享这些资料以便促进国内外研究各种改装加装。
 
 另外研究这些很有可能是有实际利益的哦，目前比亚迪在售最便宜的秦PLUS DM-i 2023款 9.98万元的低配版是不含全速自适应巡航等L2辅助驾驶功能的，想要全速自适应巡航的话只有加4.6万元升级到14.58万元的高配版。假如可以做出几千元升级辅助驾驶的改装配件，那样低配版加上改装配件的性价比就会很高。
 
@@ -26,7 +26,45 @@ python .\GitHub-ForceLargeFiles\src\reverse.py --root_dir "C:\xxx\BYDRepairManua
 ```
 
 # 国内下载速度可能会慢
-文件比较多，如果下载速度慢可以尝试Github代理，比如 https://ghproxy.com/
+因为文件比较多，每个仓库有几十GB，在中国大陆下载可能会不稳定。
+
+首先可以尝试直接下载，如果网速好很快能下载下来
+
+```
+git clone https://github.com/BYDcar/BYDPackagesByChip1.git
+```
+
+其次如果下载速度慢或者容易断线。可以尝试Github代理，比如 https://ghproxy.com/ 之类  
+
+再次如果下载整个仓库容易断线，可以仅下载需要的文件。参考这里的方法有些工具可以仅下载指定的文件夹 https://stackoverflow.com/questions/7106012/download-a-single-folder-or-directory-from-a-github-repo  
+
+最后如果下载整个几十GB的仓库，git clone下载时有可能在十几GB断线，断线没法断点续传只能重新下，遇到这种情况可以考虑一个一个commit下载（或者几个几个commit下载）
+
+```
+# 本地创建一个空git仓库
+git init
+
+# 添加一个remote
+git remote add origin https://github.com/BYDcar/BYDPackagesByChip1.git
+
+# 拉取一个commit的hash（后面的hash是从GitHub的commits里复制过来的）
+# Note: the full history up to this commit will be retrieved unless 
+#       you limit it with '--depth=...' or '--shallow-since=...'
+git fetch origin d0fcf97e634d670a34a36e71d2395064674c17a2
+
+# 把git的文件解出来
+git reset --hard FETCH_HEAD
+
+# 再拉取下一个commit的hash（后面的hash是从GitHub的commits里复制过来的，按顺序复制下一个hash）
+git fetch origin c638f4e1de4d61e2295665249d9854d63386e437
+
+# 再把git的文件解出来
+git reset --hard FETCH_HEAD
+
+再这样继续重复
+......
+
+```
 
 这一系列库包含的文件如下
 # 维修手册，仪表盘固件，软件和刷机教程：
@@ -110,6 +148,7 @@ https://github.com/BYDcar/BYDPackagesByChip2
     │  ├─3.0UI
     │  │      Di3.0_13.1.18.2110230.1.13.2.1.2110136.2.13.2.2.2110136.2.zip
     │  │      Di3.0_13.1.7.2108180.1_0.zip
+    │  │      Di3.0_13.1.7.2109290.1_0.zip
     │  │      Di3.0_13.1.7.2109220.1_0.zip
     │  │      Di3.0_13.1.7.2111181.1_1.zip
     │  │      di3.0_13.1.7.2201130.1_0.zip
@@ -203,10 +242,8 @@ https://github.com/BYDcar/BYDPackagesByChip3
 
 
 ## 按车型
+我得到的文件里另一部分是按车型分类的，原本准备上传但是经过对比文件的hash发现和上面按车机芯片分类的文件是一样的，所以这里仅把目录列出来就不上传了。按车机芯片文件的hash在`filehash-bychip.txt`里，按车型文件的hash在`filehash-bymodel.txt`文件里，可以根据hash从上面的仓库里选择文件下载。
 
-
-
-https://github.com/BYDcar/BYDPackagesByModel1
 ```
 ├─海洋系列
 │  ├─护卫舰07
@@ -238,7 +275,6 @@ https://github.com/BYDcar/BYDPackagesByModel1
             Di5.0_23.1.2.2209156.1.23.2.2.2209152.2.zip
 ```
 
-https://github.com/BYDcar/BYDPackagesByModel2
 ```
 └─汉
     ├─混动车型
@@ -286,7 +322,7 @@ https://github.com/BYDcar/BYDPackagesByModel2
                 Di4.0_1for2_21.1.2.2210283.1_0.zip
                 Di4.0_1for2_21.1.2.2212080.1_0.zip
 ```
-https://github.com/BYDcar/BYDPackagesByModel3
+
 ```
 └─秦
     ├─混动车型
@@ -347,7 +383,6 @@ https://github.com/BYDcar/BYDPackagesByModel3
             └─HA2HAA-20型120KM旗舰型(81.2.xxx)
 ```
 
-https://github.com/BYDcar/BYDPackagesByModel4
 ```
 └─宋
     ├─混动车型
@@ -443,7 +478,6 @@ https://github.com/BYDcar/BYDPackagesByModel4
                 Di3.0_13.1.22.2209205.1_0.zip
 ```
 
-https://github.com/BYDcar/BYDPackagesByModel5
 ```
 ├─元
 │  ├─燃油车型
@@ -513,7 +547,6 @@ https://github.com/BYDcar/BYDPackagesByModel5
 ```
 
 ---
-
 # BYD maintenance manual and flashing information
 BYD (Build Your Dream) Car Repair Manuals and Factory Images
 
@@ -523,9 +556,9 @@ These Github repositories contain maintenance manuals and flashing materials for
 # Why share for free?
 It is very troublesome to find some scattered information on the Internet. At present, the software and hardware ecology of automobiles is too closed. In terms of software, it is not like mobile phones and routers that can be flashed into third-party open source systems at will. In terms of hardware, there are not many modified and upgraded spare parts like 3D printers. Think about it, if the car can be flashed into the open source system, and the open source parts can be upgraded, it might be cool to realize functions that were not there before.
 
-At present, some people abroad are researching on the modification and installation of assisted driving and automatic driving. For example, this video https://www.youtube.com/watch?v=Te4AhlRXnLw refits a 2005 old car with Tesla’s iBooster and installs it The open source auxiliary software openpilot (https://github.com/commaai/openpilot) is used to realize automatic driving. There are also some people who are studying the conversion of fuel vehicles into electric vehicles, such as this video https://www.youtube.com/watch?v=ZVtOss1U7_s converting an old Volkswagen Beetle into an electric vehicle. Therefore, I share these materials in order to promote research on various modifications and installations at home and abroad.
+At present, some people abroad are researching on the modification and installation of assisted driving and automatic driving. For example, this video https://www.youtube.com/watch?v=Te4AhlRXnLw refits a 2005 old car with Tesla’s iBooster and installs it The open source auxiliary software openpilot (https://github.com/commaai/openpilot) is used to realize automatic driving. There are also some people who are studying the conversion of fuel vehicles into electric vehicles. For example, this video https://www.youtube.com/watch?v=ZVtOss1U7_s converts an old Volkswagen Beetle into an electric vehicle. Therefore, I share these materials in order to promote research on various modifications and installations at home and abroad.
 
-In addition, studying these may be of practical benefit. Currently, the cheapest BYD Qin PLUS DM-i 2023 model 99,800 yuan low-end version does not include L2 assisted driving functions such as full-speed adaptive cruise. For full-speed adaptive cruise, there is only an extra 46,000 yuan to upgrade to the high-end version of 145,800 yuan. If you can make a few thousand yuan to upgrade the modified accessories for driving assistance, then the low-end version plus modified accessories will be very cost-effective.
+In addition, studying these may be of practical benefit. At present, the cheapest Qin PLUS DM-i 2023 model sold by BYD is 99,800 yuan. The low-end version does not include L2 assisted driving functions such as full-speed adaptive cruise. For full-speed adaptive cruise, there is only an extra 46,000 yuan to upgrade to the high-end version of 145,800 yuan. If you can make a few thousand yuan to upgrade the modified accessories for driving assistance, then the low-end version plus modified accessories will be very cost-effective.
 
 
 # Large files are divided and compressed for upload
@@ -542,7 +575,45 @@ python .\GitHub-ForceLargeFiles\src\reverse.py --root_dir "C:\xxx\BYDRepairManua
 ```
 
 # Domestic download speed may be slow
-There are many files, if the download speed is slow, you can try Github proxy, such as https://ghproxy.com/
+Because there are many files, each warehouse has dozens of GB, downloading in mainland China may be unstable.
+
+First of all, you can try to download directly. If the network speed is good, you can download it quickly.
+
+```
+git clone https://github.com/BYDcar/BYDPackagesByChip1.git
+```
+
+Secondly, if the download speed is slow or easy to disconnect. You can try Github proxy, such as https://ghproxy.com/
+
+Again, if downloading the entire warehouse is easy to disconnect, you can only download the required files. Refer to the method here Some tools can only download the specified folder https://stackoverflow.com/questions/7106012/download-a-single-folder-or-directory-from-a-github-repo
+
+Finally, if you download the entire warehouse of dozens of GB, the git clone download may be disconnected at more than a dozen GB, and the disconnection cannot be resumed and can only be downloaded again. In this case, you can consider commit downloading one by one (or several A few commit downloads)
+
+```
+# Create an empty git repository locally
+git init
+
+# add a remote
+git remote add origin https://github.com/BYDcar/BYDPackagesByChip1.git
+
+# Pull a commit hash (the latter hash is copied from GitHub commits)
+# Note: the full history up to this commit will be retrieved unless
+# you limit it with '--depth=...' or '--shallow-since=...'
+git fetch origin d0fcf97e634d670a34a36e71d2395064674c17a2
+
+# Extract the git file
+git reset --hard FETCH_HEAD
+
+# Then pull the hash of the next commit (the following hash is copied from the GitHub commits, copy the next hash in order)
+git fetch origin c638f4e1de4d61e2295665249d9854d63386e437
+
+# Extract the git file again
+git reset --hard FETCH_HEAD
+
+and so on and on
+ …
+
+```
 
 The files included in this series of libraries are as follows
 # Maintenance manual, dashboard firmware, software and flashing tutorial:
@@ -582,7 +653,7 @@ https://github.com/BYDcar/BYDPackagesByChip1
      │ The first digit of version details is 1 for VP128, 2 for DL2L, 4 for DL2UL, and 5 for DL2.1L.txt
      │
      ├─2.x Chipset
-     │ ├─2.0UI
+     │ ├─2.0 UI
      │ │ Di2L_0929_0305_ota_27_signed_user_2006180.2006118.zip
      │ │ Di2L_0929_0305_ota_28_signed_user_2006180.2006118.zip
      │ │ Di2L_ota_21_signed_user_2103120.201207.zip
@@ -608,8 +679,7 @@ https://github.com/BYDcar/BYDPackagesByChip1
      │ Di2UL-5_4.1.3.2210140.1.4.2_3.5.2209280.2.4.6_7.5.2209280.2.zip
      │ Di2UL-7_4.1.1.2108100.1.4.2_3.7.2108040.2.4.6_7.7.2108040.2.zip
      │
-     └─5.x Chipset
-             Di2.1L_canfd_with2in1_SOP_ota_5_signed_user_2211180.2211180.zip
+     └─5.x Chipset Di2.1L_canfd_with2in1_SOP_ota_5_signed_user_2211180.2211180.zip
              Di2.1L_ota_1_31_signed_user_2112020.2112020.2112020.zip
              Di2.1L_ota_3_33_signed_user_2105260.2105100.2105180.zip
              Di2.1L_ota_4_34_signed_user_2108190.2108190.2108190.zip
@@ -623,168 +693,166 @@ https://github.com/BYDcar/BYDPackagesByChip2
 ```
 └─Di3
      ├─13.x Chipset
-     │ ├─3.0 UI
+     │ ├─3.0UI
      │ │ Di3.0_13.1.18.2110230.1.13.2.1.2110136.2.13.2.2.2110136.2.zip
      │ │ Di3.0_13.1.7.2108180.1_0.zip
+     │ │ Di3.0_13.1.7.2109290.1_0.zip
      │ │ Di3.0_13.1.7.2109220.1_0.zip
      │ │ Di3.0_13.1.7.2111181.1_1.zip
      │ │ di3.0_13.1.7.2201130.1_0.zip
      │ │ Di3.0_13.1.7.2204050.1_1.zip
      │ │ Di3.0_13.1.7.2204051.1_0.zip
-	 │  │      Di3.0_13.1.7.2205262.1_0.zip
-    │  │      Di3.0_13.1.7.2205265.1_0.zip
-    │  │      Di3.0_13.1.7.2207251.1_5.zip
-    │  │      Di3.0_13.1.7.2207252.1_0.zip
-    │  │      Di3.0_13.1.7.2209031.1_0.zip
-    │  │      Di3.0_13.1.7.2209032.1_0.zip
-    │  │      Di3.0_13.1.7.2211100.1_0.zip
-    │  │      Di3.0_13.1.7.2211200.1_0.zip
-    │  │
-    │  └─4.0UI
-    │          Di3.0_13.1.22.2112070.1_1.zip
-    │          di3.0_13.1.22.2112210.1_1.zip
-    │          Di3.0_13.1.22.2201110.1_0.zip
-    │          di3.0_13.1.22.2202080.1_0.zip
-    │          di3.0_13.1.22.2202081.1_0.zip
-    │          Di3.0_13.1.22.2202081.1_1.zip
-    │          Di3.0_13.1.22.2204060.1_0.zip
-    │          Di3.0_13.1.22.2205260.1_1.zip
-    │          Di3.0_13.1.22.2205262.1_0.zip
-    │          Di3.0_13.1.22.2207200.1_0.zip
-    │          Di3.0_13.1.22.2209200.1_0.zip
-    │          Di3.0_13.1.22.2209201.1_0.zip
-    │          Di3.0_13.1.22.2209203.1_0.zip
-    │          Di3.0_13.1.22.2209205.1_0.zip
-    │          Di3.0_13.1.22.2211166.1_0.zip
-    │          Di3.0_13.1.22.2212160.1_0.zip
-    │
-    └─15.x芯片组
-        ├─3.0UI
-        │      Di3.0_15.1.7.2112200.1_1.zip
-        │      Di3.0_15.1.7.2201130.1_1.zip
-        │      Di3.0_15.1.7.2204050.1_0.zip
-        │      Di3.0_15.1.7.2205262.1_0.zip
-        │      Di3.0_15.1.7.2209031.1_0.zip
-        │      Di3.0_15.1.7.2209032.1_0.zip
-        │      Di3.0_15.1.7.2211200.1_0.zip
-        │
-        ├─4.0UI
-        └─EV车型
-                Di3.0_15.1.28.2206140.1.15.2.6.2206156.2.zip
-                Di3.0_15.1.28.2209270.1.15.2.6.2209226.2.zip
-                Di3.0_15.1.9.2109140.1.15.2.6.2109070.2.zip
+     │ │ Di3.0_13.1.7.2205262.1_0.zip
+     │ │ Di3.0_13.1.7.2205265.1_0.zip
+     │ │ Di3.0_13.1.7.2207251.1_5.zip
+     │ │ Di3.0_13.1.7.2207252.1_0.zip
+     │ │ Di3.0_13.1.7.2209031.1_0.zip
+     │ │ Di3.0_13.1.7.2209032.1_0.zip
+     │ │ Di3.0_13.1.7.2211100.1_0.zip
+     │ │ Di3.0_13.1.7.2211200.1_0.zip
+     │ │
+     │ └─4.0UI
+     │ Di3.0_13.1.22.2112070.1_1.zip
+     │ di3.0_13.1.22.2112210.1_1.zip
+     │ Di3.0_13.1.22.2201110.1_0.zip
+     │ di3.0_13.1.22.2202080.1_0.zip
+     │ di3.0_13.1.22.2202081.1_0.zip
+     │ Di3.0_13.1.22.2202081.1_1.zip
+     │ Di3.0_13.1.22.2204060.1_0.zip
+     │ Di3.0_13.1.22.2205260.1_1.zip
+     │ Di3.0_13.1.22.2205262.1_0.zip
+     │ Di3.0_13.1.22.2207200.1_0.zip
+     │ Di3.0_13.1.22.2209200.1_0.zip
+     │ Di3.0_13.1.22.2209201.1_0.zip
+     │ Di3.0_13.1.22.2209203.1_0.zip
+     │ Di3.0_13.1.22.2209205.1_0.zip
+     │ Di3.0_13.1.22.2211166.1_0.zip
+     │ Di3.0_13.1.22.2212160.1_0.zip
+     │
+     └─15.x Chipset
+         ├─3.0UI
+         │ Di3.0_15.1.7.2112200.1_1.zip
+         │ Di3.0_15.1.7.2201130.1_1.zip
+         │ Di3.0_15.1.7.2204050.1_0.zip
+         │ Di3.0_15.1.7.2205262.1_0.zip
+         │ Di3.0_15.1.7.2209031.1_0.zip
+         │ Di3.0_15.1.7.2209032.1_0.zip
+         │ Di3.0_15.1.7.2211200.1_0.zip
+         │
+         ├─4.0UI
+         └─EV model
+                 Di3.0_15.1.28.2206140.1.15.2.6.2206156.2.zip
+                 Di3.0_15.1.28.2209270.1.15.2.6.2209226.2.zip
+                 Di3.0_15.1.9.2109140.1.15.2.6.2109070.2.zip
 ```
 
 
 https://github.com/BYDcar/BYDPackagesByChip3
 ```
 ├─Di4
-│  ├─16.x芯片组
-│  │  │  Di4.0_16.1.18.2203180.1.16.2.2.2203190.2.16.3.2.2203190.2.zip
-│  │  │  Di4.0_16.1.4.2112030.1.16.2.2.2112230.2.zip
-│  │  │
-│  │  └─带16.x芯片组的17.x刷机包
-│  │          Di4.0_17.1.14.2206040.1_0.zip
-│  │          Di4.0_17.1.14.2210283.1_0.zip
-│  │          Di4.0_17.1.17.2202280.1_0.zip
-│  │
-│  ├─17.x芯片组
-│  │      Di4.0_17.1.14.2206040.1_0.zip
-│  │      Di4.0_17.1.14.2210130.1_0.zip
-│  │      Di4.0_17.1.14.2210283.1_0.zip
-│  │      Di4.0_17.1.17.2202280.1_0.zip
-│  │
-│  └─21.x芯片组
-│          Di4.0_1for2_21.1.10.2208030.1_0.zip
-│          Di4.0_1for2_21.1.14.2301030.1_1.zip
-│          Di4.0_1for2_21.1.2.2204060.1_0.zip
-│          Di4.0_1for2_21.1.2.2206010.1_2.zip
-│          Di4.0_1for2_21.1.2.2208160.1_0.zip
-│          Di4.0_1for2_21.1.2.2208230.1_2.zip
-│          Di4.0_1for2_21.1.2.2208231.1_2.zip
-│          Di4.0_1for2_21.1.2.2209230.1_0.zip
-│          Di4.0_1for2_21.1.2.2210283.1_0.zip
-│          Di4.0_1for2_21.1.2.2210284.1_1.zip
-│          Di4.0_1for2_21.1.2.2212013.1_0.zip
-│          Di4.0_1for2_21.1.2.2212080.1_0（唐DMP）.zip
-│          Di4.0_1for2_21.1.2.2212080.1_0（汉DMP、汉DM-i、汉EV22款）.zip
-│          Di4.0_1for2_21.1.2.2212080.1_3.zip
-│          Di4.0_1for2_21.1.7.2206110.1_3.zip
+│ ├─16.x Chipset
+│ │ │ Di4.0_16.1.18.2203180.1.16.2.2.2203190.2.16.3.2.2203190.2.zip
+│ │ │ Di4.0_16.1.4.2112030.1.16.2.2.2112230.2.zip
+│ │ │
+│ │ └─17.x flashing package with 16.x chipset
+│ │ Di4.0_17.1.14.2206040.1_0.zip
+│ │ Di4.0_17.1.14.2210283.1_0.zip
+│ │ Di4.0_17.1.17.2202280.1_0.zip
+│ │
+│ ├─17.x Chipset
+│ │ Di4.0_17.1.14.2206040.1_0.zip
+│ │ Di4.0_17.1.14.2210130.1_0.zip
+│ │ Di4.0_17.1.14.2210283.1_0.zip
+│ │ Di4.0_17.1.17.2202280.1_0.zip
+│ │
+│ └─21.x Chipset
+│ Di4.0_1for2_21.1.10.2208030.1_0.zip
+│ Di4.0_1for2_21.1.14.2301030.1_1.zip
+│ Di4.0_1for2_21.1.2.2204060.1_0.zip
+│ Di4.0_1for2_21.1.2.2206010.1_2.zip
+│ Di4.0_1for2_21.1.2.2208160.1_0.zip
+│ Di4.0_1for2_21.1.2.2208230.1_2.zip
+│ Di4.0_1for2_21.1.2.2208231.1_2.zip
+│ Di4.0_1for2_21.1.2.2209230.1_0.zip
+│ Di4.0_1for2_21.1.2.2210283.1_0.zip
+│ Di4.0_1for2_21.1.2.2210284.1_1.zip
+│ Di4.0_1for2_21.1.2.2212013.1_0.zip
+│ Di4.0_1for2_21.1.2.2212080.1_0 (Tang DMP).zip
+│ Di4.0_1for2_21.1.2.2212080.1_0 (Han DMP, Han DM-i, Han EV22).zip
+│ Di4.0_1for2_21.1.2.2212080.1_3.zip
+│ Di4.0_1for2_21.1.7.2206110.1_3.zip
 │
 └─Di5
-    └─23.x芯片组
-            Di5.0_23.1.2.2209151.1.23.2.2.2209151.2.zip
-            Di5.0_23.1.2.2209156.1.23.2.2.2209152.2.zip
+     └─23.x Chipset
+             Di5.0_23.1.2.2209151.1.23.2.2.2209151.2.zip
+             Di5.0_23.1.2.2209156.1.23.2.2.2209152.2.zip
 ```
 
 
-## 按车型
+## By car model
+The other part of the file I got is classified by model. I was going to upload it, but after comparing the hash of the file, I found that it is the same as the file classified by car chip above, so I just list the directory here and don’t upload it. The hash of the car chip file is in `filehash-bychip.txt`, and the hash of the model file is in the `filehash-bymodel.txt` file. You can choose the file to download from the above warehouse according to the hash.
 
-
-
-https://github.com/BYDcar/BYDPackagesByModel1
 ```
-├─海洋系列
-│  ├─护卫舰07
-│  │      Di4.0_1for2_21.1.2.2212013.1_0.zip
-│  │
-│  ├─海豚
-│  │      Di3.0_13.1.22.2205262.1_0.zip
-│  │      Di3.0_13.1.22.2207200.1_0.zip
-│  │      Di3.0_13.1.22.2211166.1_0.zip
-│  │
-│  ├─海豹
-│  │      Di4.0_1for2_21.1.14.2301030.1_1.zip
-│  │      Di4.0_1for2_21.1.2.2209230.1_0.zip
-│  │      Di4.0_1for2_21.1.2.2210284.1_1.zip
-│  │      Di4.0_1for2_21.1.2.2212080.1_3.zip
-│  │
-│  ├─海鸥
-│  └─驱逐舰05
-│      ├─12.8英寸旋转屏pad（三代Dilink）
-│      │      Di3.0_13.1.22.2207200.1_0.zip
-│      │
-│      └─15.6寸旋转屏pad（四代Dilink）
-│              Di4.0_17.1.14.2206040.1_0.zip
-│              Di4.0_17.1.17.2202280.1_0.zip
+├─Ocean series
+│ ├─Frigate 07
+│ │ Di4.0_1for2_21.1.2.2212013.1_0.zip
+│ │
+│ ├─Dolphins
+│ │ Di3.0_13.1.22.2205262.1_0.zip
+│ │ Di3.0_13.1.22.2207200.1_0.zip
+│ │ Di3.0_13.1.22.2211166.1_0.zip
+│ │
+│ ├─seal
+│ │ Di4.0_1for2_21.1.14.2301030.1_1.zip
+│ │ Di4.0_1for2_21.1.2.2209230.1_0.zip
+│ │ Di4.0_1for2_21.1.2.2210284.1_1.zip
+│ │ Di4.0_1for2_21.1.2.2212080.1_3.zip
+│ │
+│ ├─Seagull
+│ └─Destroyer 05
+│ ├─12.8-inch rotating screen pad (three generations of Dilink)
+│ │ Di3.0_13.1.22.2207200.1_0.zip
+│ │
+│ └─15.6-inch rotating screen pad (fourth generation Dilink)
+│ Di4.0_17.1.14.2206040.1_0.zip
+│ Di4.0_17.1.17.2202280.1_0.zip
 │
-└─腾势
-    └─D9
-            Di5.0_23.1.2.2209151.1.23.2.2.2209151.2.zip
-            Di5.0_23.1.2.2209156.1.23.2.2.2209152.2.zip
+└─Teng potential
+     └─D9
+             Di5.0_23.1.2.2209151.1.23.2.2.2209151.2.zip
+             Di5.0_23.1.2.2209156.1.23.2.2.2209152.2.zip
 ```
 
-https://github.com/BYDcar/BYDPackagesByModel2
 ```
-└─汉
-    ├─混动车型
-    │  └─汉DM
-    │          Di2L_3.0UI_20191225_ota_24_user_2209160.2209090.zip
-    │          Di3.0_15.1.7.2112200.1_1.zip
-    │          Di3.0_15.1.7.2204050.1_0.zip
-    │          Di3.0_15.1.7.2205262.1_0.zip
-    │          Di3.0_15.1.7.2209031.1_0.zip
-    │          Di3.0_15.1.7.2211200.1_0.zip
-    │          教程.pptx
-    │
-    ├─纯电车型
-    │  ├─汉EV
-    │  │      Di2.1L_ota_1_31_signed_user_2112020.2112020.2112020.zip
-    │  │      Di2L_3.0UI_20191225_ota_25_user_2111260.2110090.zip
-    │  │      Di2L_3.0UI_20191225_ota_25_user_2209160.2209090.zip
-    │  │      Di3.0_15.1.7.2112200.1_1.zip
-    │  │      Di3.0_15.1.7.2204050.1_0.zip
-    │  │      Di3.0_15.1.7.2205262.1_0.zip
-    │  │      Di3.0_15.1.7.2209031.1_0.zip
-    │  │      Di3.0_15.1.7.2211200.1_0.zip
-    │  │      Di4.0_16.1.18.2203180.1.16.2.2.2203190.2.16.3.2.2203190.2.zip
-    │  │      Di4.0_16.1.4.2112030.1.16.2.2.2112230.2.zip
-    │  │      Di4.0_17.1.14.2210283.1_0.zip
-    │  │      教程.pptx
-    │  │
-    │  └─汉EV 22款
-    │          Di4.0_1for2_21.1.10.2208030.1_0.zip
-	│ Di4.0_1for2_21.1.2.2208230.1_2.zip
+└─Chinese
+     ├─Hybrid models
+     │ └─Han DM
+     │ Di2L_3.0UI_20191225_ota_24_user_2209160.2209090.zip
+     │ Di3.0_15.1.7.2112200.1_1.zip
+     │ Di3.0_15.1.7.2204050.1_0.zip
+     │ Di3.0_15.1.7.2205262.1_0.zip
+     │ Di3.0_15.1.7.2209031.1_0.zip
+     │ Di3.0_15.1.7.2211200.1_0.zip
+     │ Tutorial.pptx
+     │
+     ├─Pure electric vehicle
+     │ ├─Han EV
+     │ │ Di2.1L_ota_1_31_signed_user_2112020.2112020.2112020.zip
+     │ │ Di2L_3.0UI_20191225_ota_25_user_2111260.2110090.zip
+     │ │ Di2L_3.0UI_20191225_ota_25_user_2209160.2209090.zip
+     │ │ Di3.0_15.1.7.2112200.1_1.zip
+     │ │ Di3.0_15.1.7.2204050.1_0.zip
+     │ │ Di3.0_15.1.7.2205262.1_0.zip
+     │ │ Di3.0_15.1.7.2209031.1_0.zip
+     │ │ Di3.0_15.1.7.2211200.1_0.zip
+     │ │ Di4.0_16.1.18.2203180.1.16.2.2.2203190.2.16.3.2.2203190.2.zip
+     │ │ Di4.0_16.1.4.2112030.1.16.2.2.2112230.2.zip
+     │ │ Di4.0_17.1.14.2210283.1_0.zip
+     │ │ Tutorial.pptx
+     │ │
+     │ └─Han EV 22 models
+     │ Di4.0_1for2_21.1.10.2208030.1_0.zip
+     │ Di4.0_1for2_21.1.2.2208230.1_2.zip
      │ Di4.0_1for2_21.1.2.2208231.1_2.zip
      │ Di4.0_1for2_21.1.2.2210283.1_0.zip
      │ Di4.0_1for2_21.1.2.2212080.1_0.zip
@@ -802,7 +870,7 @@ https://github.com/BYDcar/BYDPackagesByModel2
                  Di4.0_1for2_21.1.2.2210283.1_0.zip
                  Di4.0_1for2_21.1.2.2212080.1_0.zip
 ```
-https://github.com/BYDcar/BYDPackagesByModel3
+
 ```
 └─Qin
      ├─Hybrid models
@@ -863,7 +931,6 @@ https://github.com/BYDcar/BYDPackagesByModel3
              └─HA2HAA-20 120KM Flagship (81.2.xxx)
 ```
 
-https://github.com/BYDcar/BYDPackagesByModel4
 ```
 └─Song
      ├─Hybrid models
@@ -899,10 +966,10 @@ https://github.com/BYDcar/BYDPackagesByModel4
      │ ├─Song Pro_fuel version
      │ │ Di2UL-3_4.1.7.2109240.1.4.4_5.3.2109240.2.4.8_9.3.2109240.2.zip
      │ │
-     │ ├─Song_fuel version_18 models
+     │ ├─Song_fuel version_18 styles
      │ │ Di2.1L_ota_4_34_signed_user_2108190.2108190.2108190.zip
      │ │
-     │ ├─Song oil version
+     │ ├─Song Fuel Version
      │ │ Di2.1L_SOP210823_ota_4_34_signed_user_2210210.2108190.2108190.zip
      │ │
      │ └─Second Generation Song Pro
@@ -934,7 +1001,7 @@ https://github.com/BYDcar/BYDPackagesByModel4
          │
          ├─Song Plus DM-i
          │ Di3.0_13.1.18.2110230.1.13.2.1.2110136.2.13.2.2.2110136.2.zip
-		 │ Di3.0_13.1.22.2212160.1_0.zip
+         │ Di3.0_13.1.22.2212160.1_0.zip
          │ Di3.0_13.1.7.2109290.1_0.zip
          │ Di3.0_13.1.7.2111181.1_1.zip
          │ Di3.0_13.1.7.2205262.1_0.zip
@@ -959,7 +1026,6 @@ https://github.com/BYDcar/BYDPackagesByModel4
                  Di3.0_13.1.22.2209205.1_0.zip
 ```
 
-https://github.com/BYDcar/BYDPackagesByModel5
 ```
 ├─yuan
 │ ├─fuel vehicle
