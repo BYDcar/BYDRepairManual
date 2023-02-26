@@ -68,6 +68,7 @@ git reset --hard FETCH_HEAD
 
 这一系列库包含的文件如下
 # 维修手册，仪表盘固件，软件和刷机教程：
+这个仓库包含维修手册之类杂七杂八的文件，因为文件较多，文件目录就不放这里，放在tree.txt文件里了
 https://github.com/BYDcar/BYDRepairManual
 
 # 安卓车机刷机资料
